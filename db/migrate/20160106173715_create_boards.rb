@@ -1,6 +1,6 @@
-class CreateBoards < ActiveRecord::Migration
+class CreateChildren < ActiveRecord::Migration
   def change
-    create_table :boards do |t|
+    create_table :children do |t|
       t.string :name
 
       t.timestamps null: false

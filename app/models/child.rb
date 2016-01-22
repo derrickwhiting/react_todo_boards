@@ -1,3 +1,3 @@
-class Board < ActiveRecord::Base
+class Child < ActiveRecord::Base
   has_many :lists, dependent: :destroy
 end

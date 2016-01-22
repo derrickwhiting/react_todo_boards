@@ -3,7 +3,7 @@ class CreateLists < ActiveRecord::Migration
     create_table :lists do |t|
       t.string :name
       t.float :percent_complete
-      t.belongs_to :board, index: true, foreign_key: true
+      t.belongs_to :child, index: true, foreign_key: true
 
       t.timestamps null: false
     end

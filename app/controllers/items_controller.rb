@@ -1,32 +1,38 @@
 class ItemsController < ApplicationController
+  before_action :list
+
   def index
-    @items = Item.all.order(:created_at)
+    @items = @list.items.order(:created_at)
   end
 
   def create
-    @item = Item.create(item_params)
+    @item = @list.items.create(item_params)
+  end
+
+  def update
+    @item = @list.items.find(params[:id])
+    @item.update(item_params)
+    render json: @item
+  end
+
+  def destroy
+    @list.items.find(params[:id]).destroy
+    head :ok
   end
 
   def check_item
     checked = params[:item][:complete] == 'true' ? true : false
-    item = Item.find(params[:id])
+    item = @list.items.find(params[:id])
     item.update(complete: checked)
     render json: item
   end
 
-  def update
-    item = Item.find(params[:id])
-    item.update(item_params)
-    render json: item
-  end
-
-  def destroy
-    Item.find(params[:id]).destroy
-    head :ok
-  end
-
   private
+    def list
+      @list = List.find(params[:list_id])
+    end
+
     def item_params
-      params.require(:item).permit(:name, :completed)
+      params.require(:item).permit(:name, :complete)
     end
 end
